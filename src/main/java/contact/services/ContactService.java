@@ -1,10 +1,12 @@
 package contact.services;
 
+import java.text.DateFormat;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import contact.Contact;
-import contact.ContactRepository;
+import contact.models.Contact;
+import contact.repositories.ContactRepository;
 
 /*
  * Service to be used by the Contact Controller
@@ -22,6 +24,7 @@ public class ContactService {
 
   //Create a new Contact resource
   public Contact createContact(Contact contact) {
+    
     return contactRepository.save(contact);
   }
 

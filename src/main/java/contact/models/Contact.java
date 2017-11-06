@@ -1,11 +1,10 @@
-package contact;
+package contact.models;
 
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
 
 @Entity
 public class Contact {
@@ -21,7 +20,7 @@ public class Contact {
 
     private String email;
 
-    private Date birthDate;
+    private String birthDate;
 
     private String workPhone;
 
@@ -66,11 +65,11 @@ public class Contact {
 		this.email = email;
   }
 
-  public Date getBirthdate() {
+  public String getBirthdate() {
     return birthDate;
   }
 
-  public void setBirthdate(Date birthdate) {
+  public void setBirthdate(String birthdate) {
     this.birthDate = birthdate;
   }
 
