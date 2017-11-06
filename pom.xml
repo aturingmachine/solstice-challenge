@@ -51,5 +51,6 @@
             </plugin>
         </plugins>
     </build>
+    <repositories base-package="contact.repositories.ContactRepository" />
 
 </project>

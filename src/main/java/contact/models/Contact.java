@@ -16,7 +16,7 @@ public class Contact {
 
     private String company;
 
-    private Byte[] profileImage;
+    private String profileImage; //this should be a base64 string
 
     private String email;
 
@@ -27,6 +27,10 @@ public class Contact {
     private String personalPhone;
 
     private String address;
+
+    private String city;
+
+    private String state;
 
   /* Getters and Setters for this Contact Object */
 	public Long getId() {
@@ -53,8 +57,12 @@ public class Contact {
     this.company = company;
   }
 
-  public Byte[] getProfileImage() {
+  public String getProfileImage() {
     return profileImage;
+  }
+
+  public void setProfileImage(String image) {
+    this.profileImage = image;
   }
 
 	public String getEmail() {
@@ -97,5 +105,19 @@ public class Contact {
     this.address = address;
   }
 
+  public String getCity() {
+    return city;
+  }
 
+  public void setCity(String city) {
+    this.city = city;
+  }
+
+  public String getState() {
+    return state;
+  }
+
+  public void setState(String state) {
+    this.state = state;
+  }
 }

@@ -1,6 +1,7 @@
 package contact.services;
 
-import java.text.DateFormat;
+
+import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,10 @@ public class ContactService {
 
   //Create a new Contact resource
   public Contact createContact(Contact contact) {
-    
-    return contactRepository.save(contact);
+    Contact contactToSave = new Contact();
+    contactToSave = contact;
+    contactToSave.setProfileImage(Base64.Encoder(contact.getProfileImage());
+    return contactRepository.save(contactToSave);
   }
 
   //Return a single contact resource
@@ -49,5 +52,22 @@ public class ContactService {
   //Return all Contact resources
   public Iterable<Contact> getAllContacts() {
     return contactRepository.findAll();
+  }
+
+  //Search
+  public Iterable<Contact> searchContacts(String query, String param) {
+    switch (query) {
+      case "email":
+        System.out.println(param);
+        return contactRepository.findByEmail(param);
+      case "phone":
+        return contactRepository.findByWorkPhoneOrPersonalPhone(param, param);
+      case "state":
+        return contactRepository.findByState(param);
+      case "city":
+        return contactRepository.findByCity(param);
+    }
+
+    return null;
   }
 }

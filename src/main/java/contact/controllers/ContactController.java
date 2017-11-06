@@ -3,14 +3,12 @@ package contact.controllers;
 /* Imports from spring */
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 /* Importing our own services and exceptions */
 import contact.models.Contact;
 import contact.services.ContactService;
-import contact.exceptions.*;
 
 @RestController
 @RequestMapping(path = "/api/contacts") //place everything behind /api for better readability
@@ -47,5 +45,11 @@ public class ContactController {
     
     return new ResponseEntity<Contact>(updatedContact, HttpStatus.OK);
 
+  }
+
+  /* -------------- UPDATE ONE CONTACT ----------------- */
+  @RequestMapping(path = "/search/{query}", method = RequestMethod.GET)
+  public Iterable<Contact> searchContacts(@PathVariable("query")String query, @RequestParam("query") String param) {
+    return contactService.searchContacts(query, param);
   }
 }
