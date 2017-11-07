@@ -13,8 +13,9 @@ public class Contact {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
-
+    
     private String company;
 
     private String profileImage; //this should be a url to a remotely hosted image
@@ -22,16 +23,20 @@ public class Contact {
     @Column(unique=true)
     private String email;
 
+    @Column(nullable = false)
     private String birthDate;
 
     private String workPhone;
 
     private String personalPhone;
 
+    @Column(nullable = false)
     private String address;
 
+    @Column(nullable = false)
     private String city;
 
+    @Column(nullable = false)
     private String state;
 
   /* Getters and Setters for this Contact Object */
