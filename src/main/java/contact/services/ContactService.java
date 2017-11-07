@@ -63,10 +63,17 @@ public class ContactService {
    * @return        The updated contact resource.
    */
   public Contact updateContact(Long id, Contact contact) {
-    Contact contactToUpdate = new Contact();
-    contactToUpdate = contact;
-    contactToUpdate.setId(id);
-    return contactRepository.save(contactToUpdate);
+    
+    //LOGIC:  If the ID exists save over old one
+    //ELSEIF: The Email Doesnt exist make a new records
+    //ELSE:   The provided data is not an update and not a valid new contact record 
+    if(contactRepository.exists(id)) {
+      contact.setId(id);
+      return contactRepository.save(contact);
+    } else {
+      return this.createContact(contact);
+    }
+    
   }
 
   /**

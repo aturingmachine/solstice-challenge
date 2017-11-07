@@ -1,7 +1,7 @@
 package contact.exceptions;
 
 /**
- * For HTTP 404 errros
+ * For HTTP 404 errors
  */
 public class ResourceNotFoundException extends RuntimeException {
   public ResourceNotFoundException() {

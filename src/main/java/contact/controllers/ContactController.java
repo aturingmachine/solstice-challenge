@@ -48,7 +48,7 @@ public class ContactController {
 
     Contact createdContact = contactService.createContact(contact);
     if (createdContact == null) {
-      return new ResponseEntity<>(HttpStatus.CONFLICT);
+      return new ResponseEntity<>("Email " + contact.getEmail() + " is already in use.", HttpStatus.CONFLICT);
     } else {
     return new ResponseEntity<Contact>(createdContact, HttpStatus.CREATED);
     }
@@ -72,7 +72,7 @@ public class ContactController {
     if (contact != null) {
       return new ResponseEntity<Contact>(contact, HttpStatus.OK);
     } else {
-      return new ResponseEntity<Contact>(HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>("Could Not Find User with id: " + id, HttpStatus.NOT_FOUND);
     }
   }
 
@@ -90,8 +90,11 @@ public class ContactController {
   @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
   public ResponseEntity <?> updateContact( @PathVariable("id") Long id, @RequestBody Contact contact) {
     Contact updatedContact = contactService.updateContact(id, contact);
-    
-    return new ResponseEntity<Contact>(updatedContact, HttpStatus.OK);
+    if(updatedContact != null) {
+      return new ResponseEntity<Contact>(updatedContact, HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>("Email " + contact.getEmail() + " is in use.", HttpStatus.BAD_REQUEST);
+    }
 
   }
 
@@ -110,7 +113,7 @@ public class ContactController {
     if(contactService.deleteContact(id)) {
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     } else {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>("Could Not Find User of ID:" + id, HttpStatus.NOT_FOUND);
     }
 
     
@@ -129,7 +132,13 @@ public class ContactController {
    * @param param      The @RequestParam of what to search for in the designated query.
    */
   @RequestMapping(path = "/search/{query}", method = RequestMethod.GET)
-  public Iterable<Contact> searchContacts(@PathVariable("query")String query, @RequestParam("param") String param) {
-    return contactService.searchContacts(query, param);
+  public ResponseEntity<?> searchContacts(@PathVariable("query")String query, @RequestParam("param") String param) {
+    Iterable<Contact> records = contactService.searchContacts(query, param);
+
+    if(records != null) {
+      return new ResponseEntity<>(records, HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>("Search Query Not Supported", HttpStatus.BAD_REQUEST);
+    }
   }
 }
