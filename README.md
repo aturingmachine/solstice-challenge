@@ -1,7 +1,7 @@
 # Solstice Backend Coding Challenge - Java
 
 ## Deployment
-This project is currently deplyed [here](url) on Heroku. It uses [Travis CI](https://travis-ci.org/) to automatically test and redeploy the application.
+This project is currently deployed [here](https://solstice-backend-java.herokuapp.com/api/contacts) on Heroku. It uses [Travis CI](https://travis-ci.org/) to automatically test and redeploy the application.
 
 It should be noted that the first requests made to the Application may be slow as Heroku puts free tier dynos to sleep after some time. The contact `id`s will also increment by odd amounts due to how [ClearDB](http://w2.cleardb.net/) does their incrementing.
 
