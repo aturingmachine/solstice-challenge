@@ -12,6 +12,6 @@ addons:
     - mysql-client-core-5.6
     - mysql-client-5.6
 before_install:
-  mysql -u root "create database example;"
+  mysql -u root -e "CREATE DATABASE example;"
 script:
 - test/run.sh
