@@ -1,5 +1,10 @@
 # Solstice Backend Coding Challenge - Java
 
+## Deployment
+This project is currently deplyed [here](url) on Heroku. It uses [Travis CI](https://travis-ci.org/) to automatically test and redeploy the application.
+
+It should be noted that the first requests made to the Application may be slow as Heroku puts free tier dynos to sleep after some time. The contact `id`s will also increment by odd amounts due to how [ClearDB](http://w2.cleardb.net/) does their incrementing.
+
 ## Assumptions
 I have made the following assumptions based on the document provided:
 
@@ -11,15 +16,15 @@ I have made the following assumptions based on the document provided:
 To run this project:
 
  1. Download the Zip and extract it.
- 2. cd solstice-challenge-master
- 3. mvn test 
+ 2. `cd <wherever-you-unzipped-it>`
+ 3. `mvn test `
  	- To test the project. More info on tests provided below
- 4. mvn spring-boot:run 
+ 4. `mvn spring-boot:run` 
 	- Will compile and run the project.
- 5. mvn package
+ 5. `mvn package`
 	- Will build a .jar file
 
-You can then start hitting endpoint using Postman or whatever HTTP client you like.
+You can then start hitting endpoints using Postman or whatever HTTP client you like.
 
 ### Resources
 
@@ -30,7 +35,7 @@ There is a single resource in this API, the `contact`. Who's model is as follows
 |       id      |  Long  |   true   |  true  | auto-increment |
 |      name     | String |   true   |  false |                |
 |    company    | String |   false  |  false |                |
-|  profileImage | String |   false  |  false |                |
+|  profileImage | String |   false  |  false | is a URL       |
 |     email     | String |   true   |  true  |                |
 |   birthDate   | String |   true   |  false |                |
 |   workPhone   | String |   false  |  false |                |
@@ -39,7 +44,7 @@ There is a single resource in this API, the `contact`. Who's model is as follows
 |      city     | String |   true   |  false |                |
 |     state     | String |   true   |  false |                |
 
-JSON for a resource would appear as follows:
+JSON for a `contact` resource would appear as follows:
 ```
 {
     "id": 1,
@@ -67,6 +72,7 @@ The API has the following endpoints exposed, all of which are behind /api. All r
 * `200 OK`
 ###### Data:
 An Array of all contacts.
+***
 
 ### `GET /contacts/{id}`
 ##### Request Parameters:
@@ -78,7 +84,7 @@ An Array of all contacts.
 * `404 Not Found`
 ###### Data:
 The single contact resource being requested.
-
+***
 ### `POST /contacts`
 ##### Request Parameters:
 * Contact data in a request body to be saved
@@ -89,7 +95,7 @@ The single contact resource being requested.
 * `409 Conflict` if the `email` field is not unique
 ###### Data:
 Returns the newly created contact resource
-
+***
 ### `DELETE /contacts/{id}`
 ##### Request Parameters:
 * `id` of a contact resource being deleted.
@@ -100,7 +106,7 @@ Returns the newly created contact resource
 * `404 Not Found`
 ###### Data:
 Empty
-
+***
 ### `PUT /contacts/{id}`
 ##### Request Parameters:
 * `id` of a contact resource being updated.
@@ -114,7 +120,7 @@ Empty
 The updated contact resource.
 ###### Notes:
 * A `PUT` request to an `id` not in use will result in the creation of a new resource.
-
+***
 ### `GET /contacts/search/{query}?value={param}`
 ##### Request Parameters:
 * `query` - the type of query being run available queries include `[phone, email, state, city]`.
