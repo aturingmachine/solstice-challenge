@@ -16,7 +16,7 @@ public class Contact {
 
     private String company;
 
-    private String profileImage; //this should be a base64 string
+    private String profileImage; //this should be a url to a remote hosted image
 
     private String email;
 

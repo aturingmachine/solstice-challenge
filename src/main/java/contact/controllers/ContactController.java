@@ -35,7 +35,12 @@ public class ContactController {
   public ResponseEntity <?> getContact( @PathVariable("id") Long id) {
     Contact contact = contactService.getContact(id);
 
-    return new ResponseEntity<Contact>(contact, HttpStatus.OK);
+    //Check If the contact is null and send a corresponding response
+    if (contact != null) {
+      return new ResponseEntity<Contact>(contact, HttpStatus.OK);
+    } else {
+      return new ResponseEntity<Contact>(HttpStatus.NOT_FOUND);
+    }
   }
 
   /* -------------- UPDATE ONE CONTACT ----------------- */
@@ -47,9 +52,9 @@ public class ContactController {
 
   }
 
-  /* -------------- UPDATE ONE CONTACT ----------------- */
+  /* -------------- SEARCH CONTACTS ----------------- */
   @RequestMapping(path = "/search/{query}", method = RequestMethod.GET)
-  public Iterable<Contact> searchContacts(@PathVariable("query")String query, @RequestParam("query") String param) {
+  public Iterable<Contact> searchContacts(@PathVariable("query")String query, @RequestParam("param") String param) {
     return contactService.searchContacts(query, param);
   }
 }

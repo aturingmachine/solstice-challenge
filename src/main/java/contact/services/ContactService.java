@@ -25,10 +25,7 @@ public class ContactService {
 
   //Create a new Contact resource
   public Contact createContact(Contact contact) {
-    Contact contactToSave = new Contact();
-    contactToSave = contact;
-    contactToSave.setProfileImage(Base64.Encoder(contact.getProfileImage());
-    return contactRepository.save(contactToSave);
+    return contactRepository.save(contact);
   }
 
   //Return a single contact resource

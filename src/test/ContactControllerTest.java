@@ -48,6 +48,7 @@ public class ContactControllerTest {
         .andExpect(jsonPath("$.id", is((int) id)))
         .andExpect(jsonPath("$.name", is(contact.getName())))
         .andExpect(jsonPath("$.company", is(contact.getCompany())))
+        .andExpect(jsonPath("$.profileImage", is(contact.getProfileImage()))
         .andExpect(jsonPath("$.email", is(contact.getEmail()))))
         .andExpect(jsonPath("$.birthdate", is(contact.getBirthdate())))
         .andExpect(jsonPath("$.workPhone", is(contact.getWorkPhone())))
@@ -55,12 +56,22 @@ public class ContactControllerTest {
         .andExpect(jsonPath("$.address", is(contact.getAddress())))
         .andExpect(jsonPath("$.city", is(contact.getCity())))
         .andExpect(jsonPath("$.state", is(contact.getState())));
+
+    //DELETE
+    mvc.perform(delete("/api/contacts/1")
+        .andExpect(status().isNoContent()));
+
+    //GET that should FAIL now
+    mvc.perform(get("/api/contacts/1")
+        .accept(MediaType.APPLICATION_JSON)
+        .andExpect(status().isNotFound()));
   }
 
   private Contact mockContact(String prefix) {
     Contact c = new Contact();
     c.setName(prefix + "_name");
     c.setCompany(prefix + "_company");
+    c.setProfileImage(prefix + "_profileImage");
     c.setEmail(prefix + "_email");
     c.setBirthdate(prefix + "_birthdate");
     c.setWorkPhone(prefix + "_workPhone");
