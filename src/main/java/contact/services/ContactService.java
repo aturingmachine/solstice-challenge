@@ -1,9 +1,6 @@
 package contact.services;
 
 
-import java.util.Base64;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import contact.models.Contact;
@@ -18,7 +15,7 @@ public class ContactService {
 
   private ContactRepository contactRepository;
 
-  @Autowired
+  
   public ContactService(ContactRepository contactRepository) {
     this.contactRepository = contactRepository;
   }

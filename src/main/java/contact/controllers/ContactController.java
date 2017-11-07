@@ -132,7 +132,7 @@ public class ContactController {
    * @param param      The @RequestParam of what to search for in the designated query.
    */
   @RequestMapping(path = "/search/{query}", method = RequestMethod.GET)
-  public ResponseEntity<?> searchContacts(@PathVariable("query")String query, @RequestParam("param") String param) {
+  public ResponseEntity<?> searchContacts(@PathVariable("query")String query, @RequestParam("value") String param) {
     Iterable<Contact> records = contactService.searchContacts(query, param);
 
     if(records != null) {
