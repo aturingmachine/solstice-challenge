@@ -11,7 +11,7 @@ import contact.models.Contact;
 import contact.services.ContactService;
 
 @RestController
-@RequestMapping(path = "/api/contacts") //place everything behind /api for better readability
+@RequestMapping(path = "/api/contacts") //place everything behind /api/contacts for better readability
 public class ContactController {
   
   private ContactService contactService;
@@ -21,13 +21,28 @@ public class ContactController {
     this.contactService = contactService;
   }
 
-  /* -------------- GET ALL CONTACTS ----------------- */
+  /**
+   * METHOD   GET
+   * URI      /api/contacts
+   * 
+   * Will return an array of all contact resources
+   * 
+   * @return  Array of all contacts and 200 OK
+   */
   @RequestMapping(path = "", method = RequestMethod.GET)
   public Iterable<Contact> getAllContacts() {
     return contactService.getAllContacts();
   }
 
-  /* -------------- CREATE A NEW CONTACT ----------------- */
+  /**
+   * METHOD   POST
+   * URI      /api/contacts
+   * 
+   * Will create a new contact based on the body fo the request
+   * 
+   * @param contact The  contact object stored in the @RequestBody to be created
+   * @return        An @ResponseEntity with the new contact and a 204, or a 409 if the email is in use
+   */
   @RequestMapping(path = "", method = RequestMethod.POST)
   public ResponseEntity <?> addNewContact(@RequestBody Contact contact) {
 
@@ -39,7 +54,16 @@ public class ContactController {
     }
   }
 
-  /* -------------- GET ONE CONTACT ----------------- */
+  /**
+   * METHOD  GET
+   * URI     /api/contacts/{id}
+   * 
+   * Will return a single contact with a matching id
+   * 
+   * @param id The @PathVariable id of the contact in question
+   * @return   @ResponseEntity with the Contact and a 200 OK, or 404 Not Found if the 
+   *           contact cannot be found.
+   */
   @RequestMapping(path = "/{id}", method = RequestMethod.GET)
   public ResponseEntity <?> getContact( @PathVariable("id") Long id) {
     Contact contact = contactService.getContact(id);
@@ -52,7 +76,17 @@ public class ContactController {
     }
   }
 
-  /* -------------- UPDATE ONE CONTACT ----------------- */
+  /**
+   * METHOD   PUT
+   * URI      /api/contacts/{id}
+   * 
+   * Will update a single contact based on the payload of the request
+   * 
+   * @param id        The @PathVariable of the contact to be updated
+   * @param contact   The @RequestBody containing the data. This will overwrite any and all fields in
+   *                  the specific contact resource.
+   * @return          An @ResponseEntity with the updated Contact
+   */
   @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
   public ResponseEntity <?> updateContact( @PathVariable("id") Long id, @RequestBody Contact contact) {
     Contact updatedContact = contactService.updateContact(id, contact);
@@ -61,7 +95,16 @@ public class ContactController {
 
   }
 
-  /* -------------- DELETE ONE CONTACT ----------------- */
+  /**
+   * METHOD  DELETE
+   * URI     /api/contacts/{id}
+   * 
+   * Will delete a single contact based on the given id
+   * 
+   * @param id        The @PathVariable id of the conteact to delete
+   * @return          An @ResponseEntity with status 204 No Content on success and 404 Not Found
+   *                  if the resource cannot be located.
+   */
   @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
   public ResponseEntity <?> deleteContact (@PathVariable("id") Long id) {
     if(contactService.deleteContact(id)) {
@@ -73,7 +116,18 @@ public class ContactController {
     
   }
 
-  /* -------------- SEARCH CONTACTS ----------------- */
+  /**
+   * METHOD  GET
+   * URI     /api/contacts/{query}?param=
+   * 
+   * Will perform a search for a contact. The search will run over "query". Available searches are
+   * "email", "phone", "city", "state". All of these searches return an array of Contacts matching the criteria.
+   * Although email is unqiue and could not have more than one result, the following allows us to abstract this
+   * into a single route.
+   * 
+   * @param query      The @PathVariable of what kind of search we will be running.
+   * @param param      The @RequestParam of what to search for in the designated query.
+   */
   @RequestMapping(path = "/search/{query}", method = RequestMethod.GET)
   public Iterable<Contact> searchContacts(@PathVariable("query")String query, @RequestParam("param") String param) {
     return contactService.searchContacts(query, param);
