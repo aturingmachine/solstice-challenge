@@ -13,8 +13,13 @@ import contact.services.ContactService;
 @RestController
 @RequestMapping(path = "/api/contacts") //place everything behind /api for better readability
 public class ContactController {
+  
+  private ContactService contactService;
+  
   @Autowired
-  private ContactService contactService; //new up a contact service
+  public ContactController(ContactService contactService) {
+    this.contactService = contactService;
+  }
 
   /* -------------- GET ALL CONTACTS ----------------- */
   @RequestMapping(path = "", method = RequestMethod.GET)
@@ -27,7 +32,11 @@ public class ContactController {
   public ResponseEntity <?> addNewContact(@RequestBody Contact contact) {
 
     Contact createdContact = contactService.createContact(contact);
+    if (createdContact == null) {
+      return new ResponseEntity<>(HttpStatus.CONFLICT);
+    } else {
     return new ResponseEntity<Contact>(createdContact, HttpStatus.CREATED);
+    }
   }
 
   /* -------------- GET ONE CONTACT ----------------- */
@@ -50,6 +59,18 @@ public class ContactController {
     
     return new ResponseEntity<Contact>(updatedContact, HttpStatus.OK);
 
+  }
+
+  /* -------------- DELETE ONE CONTACT ----------------- */
+  @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+  public ResponseEntity <?> deleteContact (@PathVariable("id") Long id) {
+    if(contactService.deleteContact(id)) {
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    } else {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    
   }
 
   /* -------------- SEARCH CONTACTS ----------------- */

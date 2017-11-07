@@ -1,6 +1,7 @@
 package contact.models;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,8 +17,9 @@ public class Contact {
 
     private String company;
 
-    private String profileImage; //this should be a url to a remote hosted image
+    private String profileImage; //this should be a url to a remotely hosted image
 
+    @Column(unique=true)
     private String email;
 
     private String birthDate;

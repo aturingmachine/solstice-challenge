@@ -1,25 +1,50 @@
-package test;
+package contact.controller.test;
 
-import java.awt.PageAttributes.MediaType;
 
-import org.aspectj.lang.annotation.Before;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.test.web.servlet.ResultActions;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import contact.controllers.ContactController;
 import contact.models.Contact;
+import contact.Application;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = Application.class)
+@ActiveProfiles("test")
 public class ContactControllerTest {
 
   @InjectMocks
   ContactController controller;
 
+  @Autowired
+  WebApplicationContext context;
+
   private MockMvc mvc;
+
+  public ObjectMapper mapper = new ObjectMapper();
   
   @Before
   public void initTests() {
@@ -30,7 +55,7 @@ public class ContactControllerTest {
   @Test
   public void shouldCreateAndUpdateAndDelete() throws Exception {
     Contact contact = mockContact("shouldCreateAndUpdateAndDelete");
-    byte[] contactJson = toJson(contact);
+    byte[] contactJson = mapper.writeValueAsBytes(contact);
 
     //CREATE
     MvcResult result = mvc.perform(post("/api/contacts")
@@ -39,7 +64,7 @@ public class ContactControllerTest {
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isCreated())
         .andReturn();
-    long id = 1;
+        long id = 1;
 
     //GET
     mvc.perform(get("/api/contacts/1")
@@ -48,8 +73,8 @@ public class ContactControllerTest {
         .andExpect(jsonPath("$.id", is((int) id)))
         .andExpect(jsonPath("$.name", is(contact.getName())))
         .andExpect(jsonPath("$.company", is(contact.getCompany())))
-        .andExpect(jsonPath("$.profileImage", is(contact.getProfileImage()))
-        .andExpect(jsonPath("$.email", is(contact.getEmail()))))
+        .andExpect(jsonPath("$.profileImage", is(contact.getProfileImage())))
+        .andExpect(jsonPath("$.email", is(contact.getEmail())))
         .andExpect(jsonPath("$.birthdate", is(contact.getBirthdate())))
         .andExpect(jsonPath("$.workPhone", is(contact.getWorkPhone())))
         .andExpect(jsonPath("$.personalPhone", is(contact.getPersonalPhone())))
@@ -58,13 +83,13 @@ public class ContactControllerTest {
         .andExpect(jsonPath("$.state", is(contact.getState())));
 
     //DELETE
-    mvc.perform(delete("/api/contacts/1")
-        .andExpect(status().isNoContent()));
+    mvc.perform(delete("/api/contacts/1"))
+        .andExpect(status().isNoContent());
 
     //GET that should FAIL now
     mvc.perform(get("/api/contacts/1")
-        .accept(MediaType.APPLICATION_JSON)
-        .andExpect(status().isNotFound()));
+        .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isNotFound());
   }
 
   private Contact mockContact(String prefix) {
@@ -79,6 +104,8 @@ public class ContactControllerTest {
     c.setAddress(prefix + "_address");
     c.setCity(prefix + "_city");
     c.setState(prefix + "_state");
+
+    return c;
 
   }
 }
