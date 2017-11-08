@@ -64,7 +64,7 @@ public class ContactControllerTest {
         long id = 1;
 
     //GET
-    mvc.perform(get("/api/contacts/1")
+    mvc.perform(get("/api/contacts/" + id)
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.id", is((int) id)))
@@ -80,11 +80,11 @@ public class ContactControllerTest {
         .andExpect(jsonPath("$.state", is(contact.getState())));
 
     //DELETE
-    mvc.perform(delete("/api/contacts/1"))
+    mvc.perform(delete("/api/contacts/" + id))
         .andExpect(status().isNoContent());
 
     //GET that should FAIL now
-    mvc.perform(get("/api/contacts/1")
+    mvc.perform(get("/api/contacts/" + id)
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isNotFound());
   }
