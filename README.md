@@ -264,3 +264,12 @@ Host: localhost:8080
     }
 ]
 ```
+
+## Testing
+You can run the tests including with this project by running `mvn test`. The tests run over 3 endpoints in the following manner:
+
+1. Mock a `contact` resource
+2. Send the `contact` to the server via `POST` expecting a `201 Created` response.
+3. Then `GET` the `contact` resource from `/api/contacts/1` and check that all of its returned values are the same as the mock `contact`
+4. Then `DELETE` the contact resource at `/api/contacts/1` expecting a `204 No Content` response.
+5. Then `GET` the (now deleted) `contact` resource from `/api/contacts/1` and expect a `404 Not Found` response.
