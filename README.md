@@ -1,5 +1,7 @@
 # Solstice Backend Coding Challenge - Java
 
+[![Build Status](https://travis-ci.com/aturingmachine/solstice-challenge.svg?token=WJQ6vS1Y53eUoWsvJTkh&branch=master)](https://travis-ci.com/aturingmachine/solstice-challenge)
+
 ## Description
 This project is intended to be a solution to the Solstice Java Backend Developer Challenge. It uses Maven to manage depencies, and Spring Boot as a Java Framework. It is a simple REST API with a single resource.
 
