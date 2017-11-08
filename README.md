@@ -33,7 +33,7 @@ To run this project:
 You can then start hitting endpoints using Postman or whatever HTTP client you like.
 ***
 
-### Resources
+## Resources
 
 There is a single resource in this API, the `contact`. Who's model is as follows:
 
@@ -69,7 +69,7 @@ JSON for a `contact` resource would appear as follows:
 ```
 ***
 
-### Endpoints
+## Endpoints
 The API has the following endpoints exposed, all of which are behind /api. All requests and responses are done using JSON format.
 
 #### `GET /contacts`
@@ -170,8 +170,8 @@ Content-Type: application/json
 ###### Example Response:
 ```
 {
-    "id": 2,
-    "name": "Bugs Bunny",
+    "id": 1,
+    "name": "Daffy Duck",
     "company": "Acme Inc.",
     ...
 }
