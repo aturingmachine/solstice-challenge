@@ -31,6 +31,7 @@ To run this project:
 	- Will build a .jar file
 
 You can then start hitting endpoints using Postman or whatever HTTP client you like.
+***
 
 ### Resources
 
@@ -66,6 +67,7 @@ JSON for a `contact` resource would appear as follows:
     "birthdate": "1937-04-17"
 }
 ```
+***
 
 ### Endpoints
 The API has the following endpoints exposed, all of which are behind /api. All requests and responses are done using JSON format.
