@@ -55,6 +55,9 @@ public class ContactService {
    * and its id set to that of the contact to update. JPA then realizes
    * this is an update and covers that for us.
    * 
+   * Calls createContact() in the case of making a new contact as
+   * to cut down on repeated code
+   * 
    * @param id      The ID of the contact to be updated.
    * @param contact The new contact data.
    * @return        The updated contact resource.
